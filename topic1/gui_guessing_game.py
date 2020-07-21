@@ -1,14 +1,6 @@
 import random as rand
 import tkinter
 
-
-
-
-#Reset game
-#Else
-#Set the button to visible but not clickable
-#Add guessed number to guessed_list in object of type NumberGuesser
-
 #functions to let user pick input
 #Allow user to push button with their corresponding guess.
 def pick_one():
@@ -77,6 +69,9 @@ g.title('Guessing Game')
 label = tkinter.Label(g, text="Waiting for user pick")
 label.grid(row=11)
 
+#label = tkinter.Label(g,text=generate_random_number()) #wasn't sure how to create generated number to print
+#label.grid(row=12)
+
 
 #With buttons each numbered 1 to MAX. You can select 10 or more buttons for this, deciding at design time.
 button_1= tkinter.Button(g, text='1', width=10, command=pick_one).grid(row=1)
@@ -97,8 +92,18 @@ button_reset = tkinter.Button(g, text='Reset', width=25, command=clear_func).gri
 
 g.mainloop()
 
-class NumberGuesser:
+class NumberGuesser():
 #Write a class NumberGuesser.
+#Add guessed number to guessed_list in object of type NumberGuesser
 #guessed_list - class attribute contains all the guessed numbers, should be empty on new game or reset game
 #add_guess - class method that will add to the guessed_list
-    pass
+    def add_guess(self, user_number):
+        user_guesses=[]
+
+        while user_number > 0:
+
+            user_guesses.append(user_number)
+
+
+
+
