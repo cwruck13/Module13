@@ -71,8 +71,42 @@ def select_person_id(conn):
     rows = cur.fetchall()
     return rows # return the rows
 
+def select_all_persons(conn):
+    """Query all rows of person table
+    :param conn: the connection object
+    :return:
+    """
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM person")
+
+    rows = cur.fetchall()
+    return rows # return the rows
+
+def select_all_students(conn):
+    """Query all rows of student table
+    :param conn: the connection object
+    :return:
+    """
+
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM student")
+
+    rows = cur.fetchall()
+    return rows # return rows
+
 conn = create_connection("pythonsqlite.db")
 
+def create_person():
+    insert_person=Entry(db, person)
+
+    for x in insert_person:
+        x.insert()
+
+def create_student():
+    insert_student=Entry(db, student)
+
+    for x in insert_student:
+        x.insert()
 
 db = tk.Tk()
 
@@ -108,7 +142,7 @@ last_name = tk.Entry(db, width=15).grid(column=2,row=3)
 person = (first_name, last_name)
 
 #Button "Add Person"
-add_person = tk.Button(db, text="Add Person", width=25).grid(row=4)
+add_person = tk.Button(db, text="Add Person", width=25, command=create_person).grid(row=4)
 #command=create_person
 
 #Create Student
@@ -138,18 +172,33 @@ start_date = tk.Entry(db, width=15).grid(column=2,row=8)
 student = (major,start_date, select_person_id(conn))
 
 #Button "Add Student"
-add_student = tk.Button(db, text="Add Student", width=25).grid(row=9)
+add_student = tk.Button(db, text="Add Student", width=25, command=create_student).grid(row=9)
 #create student function
 
 #Button: "View Person Table"
-view_person = tk.Button(db, text="View Person", width=25).grid(row=10)
+view_person = tk.Button(db, text="View Person", width=25, command=select_all_persons).grid(row=10)
 #Query for all rows of Person
 #Display rows in the GUI
 
 #Button: "View Student Table"
-view_student = tk.Button(db, text="View Student", width=25).grid(row=11)
-#Query for all rows of Person
+view_student = tk.Button(db, text="View Student", width=25, command=select_all_students).grid(row=11)
+#Query for all rows of Student
+
 #Display rows in the GUI
+
+
+if __name__ == '__main__':
+    conn = create_connection("pythonsqlite.db")
+
+    with conn:
+        rows = select_all_persons(conn)
+        for row in rows:
+            print(row)
+
+    with conn:
+        rows = select_all_students(conn)
+        for row in rows:
+            print(row)
 
 #Exit Button
 exit_button = tk.Button(db, text='Exit', width=25, command=db.destroy)
